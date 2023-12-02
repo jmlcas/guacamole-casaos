@@ -1,0 +1,24 @@
+# Guacamole - CasaOS
+
+# icono para Guacamole
+https://icon.casaos.io/main/all/guacamole.png
+
+----------------------------------------------
+
+version: '3.3'
+ 
+services:
+  
+  guacamole:
+    image: flcontainers/guacamole
+    container_name: guacamole
+    restart: unless-stopped
+    environment:
+      - GUID=1000
+      - PUID=1000
+      - TZ=Europe/Madrid   
+    ports:
+      - "8200:8080"
+    volumes:
+      - /DATA/AppData/guaca/config:/config
+      - /etc/localtime:/etc/localtime:ro 
