@@ -1,23 +1,40 @@
-# Guacamole - CasaOS
-
-# icono para Guacamole
-https://icon.casaos.io/main/all/guacamole.png
-----------------------------------------------
-
-version: '3.3'
- 
+name: guacamole
 services:
-  
   guacamole:
-    image: flcontainers/guacamole
     container_name: guacamole
-    restart: unless-stopped
     environment:
       - GUID=1000
       - PUID=1000
-      - TZ=Europe/Madrid   
+      - TZ=Europe/Madrid
+    image: flcontainers/guacamole
+    labels:
+      icon: https://icon.casaos.io/main/all/guacamole.png
     ports:
-      - "8200:8080"
+      - target: 8080
+        published: "8200"
+        protocol: tcp
+    restart: unless-stopped
     volumes:
-      - /DATA/AppData/guaca/config:/config
-      - /etc/localtime:/etc/localtime:ro 
+      - type: bind
+        source: /DATA/AppData//config
+        target: /config
+      - type: bind
+        source: /etc/localtime
+        target: /etc/localtime
+    networks:
+      - guacamole
+    privileged: false
+networks:
+  guacamole:
+    name: guacamole
+x-casaos:
+  author: Labarta
+  category: Utilities
+  hostname: ""
+  icon: https://icon.casaos.io/main/all/guacamole.png
+  index: /
+  port_map: "8200"
+  scheme: http
+  store_app_id: guacamole
+  title:
+    custom: Guacamole
